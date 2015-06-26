@@ -30,6 +30,7 @@ GEM
     notiffany (0.0.6)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    pdfkit (0.5.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -51,4 +52,5 @@ PLATFORMS
 DEPENDENCIES
   guard-rake
   liquid
+  pdfkit
   sass

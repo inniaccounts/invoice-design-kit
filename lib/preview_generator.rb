@@ -1,6 +1,7 @@
 require 'liquid'
 require 'sass'
 require 'yaml'
+require 'pdfkit'
 
 class PreviewGenerator
 
@@ -11,6 +12,8 @@ class PreviewGenerator
   end
 
   def generate
+    Dir.mkdir('invoice_previews') unless Dir.exist?('invoice_previews')
+
     puts '------------------------'
     Dir.entries('invoice_designs').select {|entry| !(entry =='.' || entry == '..') }.each do |d|
       generate_preview d
@@ -23,47 +26,53 @@ class PreviewGenerator
 
   def generate_preview(invoice_name)
     puts "Generating previews for '#{invoice_name}'"
+    dir = "invoice_previews/#{invoice_name}/"
+    Dir.mkdir(dir) unless Dir.exist?(dir)
+
+    css = generate_css invoice_name
+    html = generate_html invoice_name
+    generate_pdf invoice_name if html && css
+
+    puts ' DONE'
+  end
+
+  def generate_css(invoice_name)
+    # CSS
     begin
-      source_html = File.open("invoice_designs/#{invoice_name}/invoice.html", "rb").read
       source_scss = File.open("invoice_designs/#{invoice_name}/invoice.scss", "rb").read
+      engine = Sass::Engine.new(source_scss, :syntax => :scss)
+      output_css = engine.render
+      dir = "invoice_previews/#{invoice_name}/"
+      File.write(dir + 'invoice.css', output_css)
     rescue Exception => e
-      puts ' Error: could not open invoice.html'
-      puts ' ' + e.message
+      puts ' Error: could not parse css'
+      puts ' ' +e.message
       return
     end
+    output_css
+  end
 
-    # HTML
+
+  def generate_html(invoice_name)
     begin
+      source_html = File.open("invoice_designs/#{invoice_name}/invoice.html", "rb").read
       output_html = Liquid::Template.parse(@header + source_html + @footer).render 'Invoice' => @data
+      dir = "invoice_previews/#{invoice_name}/"
+      File.write(dir + 'invoice.html', output_html)
       puts output_html
     rescue Exception => e
       puts ' Error: could not parse html'
       puts ' ' +e.message
       return
     end
-
-
-    # CSS
-    begin
-      engine = Sass::Engine.new(source_scss, :syntax => :scss)
-      output_css = engine.render
-    rescue Exception => e
-      puts ' Error: could not parse css'
-      puts ' ' +e.message
-      return
-    end
-
-
-    output_invoice invoice_name, output_html, output_css
-
-    puts ' DONE'
+    output_html
   end
 
-  def output_invoice(invoice_name, html, css)
-    dir = "invoice_previews/#{invoice_name}/"
-    Dir.mkdir(dir) unless Dir.exist?(dir)
-    File.write(dir + 'invoice.html', html)
-    File.write(dir + 'invoice.css', css)
+  def generate_pdf(invoice_name)
+    kit = PDFKit.new(File.open("invoice_previews/#{invoice_name}/invoice.html", "rb").read, :page_size => 'A4')
+    kit.stylesheets << "invoice_previews/#{invoice_name}/invoice.css"
+    kit.to_file("invoice_previews/#{invoice_name}/invoice.pdf")
   end
+
 
 end
