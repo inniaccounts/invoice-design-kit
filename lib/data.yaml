@@ -1,0 +1,11 @@
+Date                  : 2014-01-01
+DateDue               : 2014-02-01
+InvoiceNumber         : 123
+InvoiceCurrencySymbol : GBP
+InvoiceLines:
+  - Description : Line 1
+    Quantity    : 2
+    UnitPrice   : 12.32
+  - Description : Line 2
+    Quantity    : 2
+    UnitPrice   : 12.32

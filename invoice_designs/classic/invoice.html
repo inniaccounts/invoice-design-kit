@@ -1,0 +1,9 @@
+<h1>Invoice</h1>
+<ul>
+{% for line in Invoice.InvoiceLines %}
+<li>
+    {{ line.Description }}
+</li>
+{% endfor %}
+</ul>
+{{ Invoice.Date | date: "%d/%m/%Y" }}
