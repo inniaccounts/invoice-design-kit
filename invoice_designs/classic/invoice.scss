@@ -1,14 +1,15 @@
 /******************************/
 /* Global variables:          */
 
-$font-family: Helvetica, sans-serif  !default;
-$primary-color: #000066 !default;
-$logo: false !default;  // url('http://placehold.it/350x150')
+$font-title: Helvetica, sans-serif  !default;
+$font-body: Helvetica, sans-serif  !default;
+$color-primary: #000066 !default;
+$logo: false !default;  // url('http://placehold.it/350x100')
 
 /******************************/
 
 body {
-  font: 13px/1.1 $font-family;
+  font: 13px/1.1 $font-body;
   margin: 0;
   padding: 1px; // Intentional: to allow table borders to render correctly
 }
@@ -20,6 +21,7 @@ section#invoice {
   margin-bottom:-200px;
 
   h2 {
+    font-family:  $font-title;
     font-size:inherit;
     font-weight: bold;
     margin:0;
@@ -32,15 +34,24 @@ section#invoice {
       padding: 5px;
     }
     th {
-      background-color:$primary-color;
+      background-color:$color-primary;
       color:white;
+      font-family: $font-title;
     }
   }
 
 
   section#header {
-    min-height:400px;
+    min-height:380px;
+    margin-bottom:20px;
     position: relative;
+
+    // Clearfix:
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
 
     #identity {
       max-width:50%;
@@ -50,13 +61,15 @@ section#invoice {
       @if $logo {
         .logo {
           content:$logo;
-          max-width:150px;
+          max-width:350px;
+          max-height:100px;
           margin-bottom: 1em;
         }
       }
 
       .company-name {
         font-weight: bold;
+        font-family: $font-title;
       }
       .phone {
         margin-top:10px;
@@ -81,9 +94,9 @@ section#invoice {
 
       h1  {
         text-align: center;
-        font-size: 32px;
+        font: 32px/1.1 $font-title;
         font-weight: bold ;
-        color:$primary-color;
+        color:$color-primary;
         margin:0;
         padding-top:1em;
         padding-bottom: 3px;
@@ -118,8 +131,10 @@ section#invoice {
       font-weight: bold;
       margin-bottom:0px;
       position:absolute;
-      bottom:0;
+      bottom:-20px;
       width:100%;
+      font-family: $font-title;
+
     }
 
   }
