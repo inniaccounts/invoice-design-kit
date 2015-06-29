@@ -59,7 +59,6 @@ class PreviewGenerator
       output_html = Liquid::Template.parse(@header + source_html + @footer).render 'Invoice' => @data
       dir = "invoice_previews/#{invoice_name}/"
       File.write(dir + 'invoice.html', output_html)
-      puts output_html
     rescue Exception => e
       puts ' Error: could not parse html'
       puts ' ' +e.message
@@ -69,7 +68,11 @@ class PreviewGenerator
   end
 
   def generate_pdf(invoice_name)
-    kit = PDFKit.new(File.open("invoice_previews/#{invoice_name}/invoice.html", "rb").read, :page_size => 'A4')
+    kit = PDFKit.new(File.open("invoice_previews/#{invoice_name}/invoice.html", "rb").read, {        :page_size => 'A4',
+                                                                                                     :margin_top => '1cm',
+                                                                                                     :margin_right => '1cm',
+                                                                                                     :margin_bottom => '1cm',
+                                                                                                     :margin_left => '1cm',})
     kit.stylesheets << "invoice_previews/#{invoice_name}/invoice.css"
     kit.to_file("invoice_previews/#{invoice_name}/invoice.pdf")
   end

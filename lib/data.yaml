@@ -1,11 +1,50 @@
+CompanyName           : The Incredible IT Consultants (UK) Limited
+TradingAddress        : |
+  Unit 1
+  Riverside Industrial Estate
+  Hedgerow Lane
+  Little Sundown
+  Biggin
+  Smythshire
+  SM2 7HG
+  United Kingdom
+CompanyPhone          : +44(0)1332 778998
+CompanyEmail          : info@theincredibleitconsultants.co.uk
+#InvoiceReference      : ABS-0023
+InvoiceNumber         : 12
 Date                  : 2014-01-01
 DateDue               : 2014-02-01
-InvoiceNumber         : 123
+InvoiceAddress        : |
+  Cloud Application Service International Plc
+  123, Cumulus Way
+  Greater Sunup
+  Gigabourne
+  Appshire
+  AP1 2PT
+  United Kingdom
+HeaderMessage         : |
+  This is a message
+  Which spans a number
+  of lines on an invoice
+Description           : This is an invoice description
 InvoiceCurrencySymbol : GBP
-InvoiceLines:
+Lines:
   - Description : Line 1
     Quantity    : 2
-    UnitPrice   : 12.32
+    UnitPrice   : £12.32
+    VATRate     : 20.0%
+    AmountExVAT : £15.55
   - Description : Line 2
     Quantity    : 2
-    UnitPrice   : 12.32
+    UnitPrice   : £12.32
+    VATRate     : 20.0%
+    AmountExVAT : £15.55
+FooterMessage        : "Company registration number: 07116921"
+NonGBPVatInvoice     : false
+InvoiceCurrency      : GBP
+AmountNetGBP         : £15.00
+AmountNet            : 150.00
+AmountVATGBP         : £3.00
+AmountVAT            : 30.00
+AmountTotalGBP       : £17.00
+AmountTotal          : 170.00

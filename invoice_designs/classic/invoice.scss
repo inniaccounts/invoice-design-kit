@@ -1,3 +1,214 @@
 body {
-  color: red;
+  font: 13px/1.1 Helvetica, sans-serif;
+  margin: 0;
+  padding: 1px; // Intentional: to allow table borders to render correctly
+}
+
+section#invoice {
+  margin: 0 auto;
+  height:100%;
+  position:relative;
+
+  h2 {
+    font-size:inherit;
+    font-weight: bold;
+    margin:0;
+    text-transform: uppercase;
+  }
+
+  table {
+    border-collapse: collapse;
+    td, th {
+      padding: 5px;
+    }
+    th {
+      background-color:#000066;
+      color:white;
+    }
+  }
+
+
+  section#header {
+    min-height:400px;
+    position: relative;
+
+    #identity {
+      max-width:50%;
+      float:left;
+      min-height: 200px;
+
+      .company-name {
+        font-weight: bold;
+      }
+      .phone {
+        margin-top:10px;
+      }
+    }
+
+    #logo {
+      text-align: right;
+      float: right;
+      position: relative;
+      margin-top: 25px;
+      border: 1px solid #fff;
+      max-width: 540px;
+      max-height: 100px;
+      overflow: hidden;
+    }
+
+    #meta {
+      max-width:40%;
+      float:right;
+      text-align: center;
+
+      h1  {
+        text-align: center;
+        font: 32px Helvetica, Sans-Serif;
+        font-weight: bold ;
+        color:#000066;
+        margin:0;
+        padding-top:1em;
+        padding-bottom: 3px;
+      }
+
+      table {
+        font-size:13px;
+
+        td, th {
+          border:1px solid black;
+          text-align: center;
+          padding:3px;
+        }
+      }
+
+    }
+
+    #customer {
+      clear:both;
+      float:left;
+      width:55%;
+    }
+
+    #notes {
+      float:left;
+
+    }
+
+    #description {
+      font-size:16px;
+      font-weight: bold;
+      margin-bottom:0px;
+      position:absolute;
+      bottom:0;
+      width:100%;
+    }
+
+  }
+
+
+  section#lines {
+
+    table {
+      width: 100%;
+      margin:0;
+      border-bottom: 1px solid black;
+
+      // Global styles:
+      tr {
+        height: 20px;
+
+        th {
+          border:1px solid black;
+        }
+
+        td {
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          vertical-align: top;
+
+          &.qty, &.vatrate {
+            text-align: center;
+          }
+
+          &.unit, &.price {
+            text-align: right;
+          }
+
+        }
+
+        td, th {
+          font-size:13px;
+        }
+      }
+
+      th {
+        &.description {
+          text-align: left;
+          width: auto;
+        }
+
+        &.qty, &.vatrate {
+          width: 48px;
+        }
+        &.unit, &.price {
+          width: 80px;
+        }
+      }
+
+      tbody {
+        tr:nth-child(2n+1) td {
+          background-color: #eeeeee;
+        }
+      }
+
+    }
+
+  }
+
+  section#totals {
+    margin-top:3px;
+
+    table {
+      float: right;
+      td {
+        width:110px;
+        font-size:13px;
+        text-align: right;
+        border:1px solid black;
+
+        &.label {font-size:10px; text-transform: uppercase}
+
+      }
+
+      tr.subtotal {
+      }
+
+      tr.vat {
+      }
+
+      tr.total td {
+        &.label {font-size:10px; text-transform: uppercase; font-weight: bold;}
+        font-size:18px;
+      }
+    }
+
+    td.base {
+      display: none;
+    }
+
+    &.non-gbp-invoice {
+      td.base {
+        display: inherit;
+      }
+    }
+
+  }
+
+  section#footer {
+    position:absolute;
+    bottom:0;
+    font-size:10px;
+    width:100%;
+  }
+
 }
