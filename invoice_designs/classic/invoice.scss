@@ -8,6 +8,7 @@ section#invoice {
   margin: 0 auto;
   height:100%;
   position:relative;
+  margin-bottom:-200px;
 
   h2 {
     font-size:inherit;
@@ -113,10 +114,12 @@ section#invoice {
       margin:0;
       border-bottom: 1px solid black;
 
+      thead {display: table-header-group;}
+
       // Global styles:
       tr {
         height: 20px;
-
+        page-break-inside: avoid;
         th {
           border:1px solid black;
         }
@@ -205,8 +208,9 @@ section#invoice {
   }
 
   section#footer {
-    position:absolute;
-    bottom:0;
+//    position:fixed;
+ //   bottom:0;
+    clear:both;
     font-size:10px;
     width:100%;
   }

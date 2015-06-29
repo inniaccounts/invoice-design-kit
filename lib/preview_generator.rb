@@ -9,6 +9,16 @@ class PreviewGenerator
     @header = File.open("lib/resources/header.html", "rb").read
     @footer = File.open("lib/resources/footer.html", "rb").read
     @data = YAML.load_file('lib/data.yaml')
+
+    if true # multi-page invoice
+      lines = Array.new
+      50.times do
+        @data['Lines'].each do |l|
+          lines << l.dup
+        end
+      end
+      @data['Lines'] = lines
+    end
   end
 
   def generate
