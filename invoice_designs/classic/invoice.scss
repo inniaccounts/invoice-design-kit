@@ -1,5 +1,14 @@
+/******************************/
+/* Global variables:          */
+
+$font-family: Helvetica, sans-serif  !default;
+$primary-color: #000066 !default;
+$logo: false !default;  // url('http://placehold.it/350x150')
+
+/******************************/
+
 body {
-  font: 13px/1.1 Helvetica, sans-serif;
+  font: 13px/1.1 $font-family;
   margin: 0;
   padding: 1px; // Intentional: to allow table borders to render correctly
 }
@@ -23,7 +32,7 @@ section#invoice {
       padding: 5px;
     }
     th {
-      background-color:#000066;
+      background-color:$primary-color;
       color:white;
     }
   }
@@ -37,6 +46,14 @@ section#invoice {
       max-width:50%;
       float:left;
       min-height: 200px;
+
+      @if $logo {
+        .logo {
+          content:$logo;
+          max-width:150px;
+          margin-bottom: 1em;
+        }
+      }
 
       .company-name {
         font-weight: bold;
@@ -64,9 +81,9 @@ section#invoice {
 
       h1  {
         text-align: center;
-        font: 32px Helvetica, Sans-Serif;
+        font-size: 32px;
         font-weight: bold ;
-        color:#000066;
+        color:$primary-color;
         margin:0;
         padding-top:1em;
         padding-bottom: 3px;
@@ -85,14 +102,15 @@ section#invoice {
     }
 
     #customer {
+      margin-top:1em;
       clear:both;
       float:left;
       width:55%;
     }
 
     #notes {
+      margin-top:1em;
       float:left;
-
     }
 
     #description {
