@@ -1,5 +1,5 @@
 CompanyName           : The Incredible IT Consultants (UK) Limited
-TradingAddress        : |
+CompanyAddress        : |
   Unit 1
   Riverside Industrial Estate
   Hedgerow Lane
@@ -10,7 +10,8 @@ TradingAddress        : |
   United Kingdom
 CompanyPhone          : +44(0)1332 778998
 CompanyEmail          : info@theincredibleitconsultants.co.uk
-#InvoiceReference      : ABS-0023
+CompanyURL            : www.here.com
+InvoiceReference      : ABS-0023
 InvoiceNumber         : 12
 Date                  : 2014-01-01
 DateDue               : 2014-02-01
@@ -22,29 +23,29 @@ InvoiceAddress        : |
   Appshire
   AP1 2PT
   United Kingdom
-HeaderMessage         : |
+InvoiceMessge         : |
   This is a message
   Which spans a number
   of lines on an invoice
 Description           : This is an invoice description
-InvoiceCurrencySymbol : GBP
 Lines:
   - Description : Line 1
     Quantity    : 2
     UnitPrice   : £12.32
     VATRate     : 20.0%
     AmountExVAT : £15.55
+    AmountIncVAT: £20.00
   - Description : Line 2
     Quantity    : 2
     UnitPrice   : £12.32
     VATRate     : 20.0%
     AmountExVAT : £15.55
-FooterMessage        : "Company registration number: 07116921"
+    AmountIncVAT: £20.00
+LegalFooter          : "Reg office: XX. Company registration number: 07116921. VAT Reg no GBxxx."
 NonGBPVatInvoice     : false
-InvoiceCurrency      : GBP
 AmountNetGBP         : £15.00
-AmountNet            : 150.00
+AmountNet            : €150.00
 AmountVATGBP         : £3.00
-AmountVAT            : 30.00
+AmountVAT            : €30.00
 AmountTotalGBP       : £17.00
-AmountTotal          : 170.00
+AmountTotal          : €170.00
