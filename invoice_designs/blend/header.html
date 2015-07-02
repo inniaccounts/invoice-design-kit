@@ -1,0 +1,51 @@
+<section id="header">
+    <div class="left">
+        <div id="logo"></div>
+        <div id="company">
+            <h2>{{Invoice.CompanyName}}</h2>
+            <div class="address">
+                {{Invoice.TradingAddress | newline_to_br}}
+            </div>
+        </div>
+        <div id="customer">
+            <h2>Invoice to:</h2>
+            <div class="address">
+                {{Invoice.InvoiceAddress | newline_to_br}}
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <table id="icons">
+            <tr>
+                <td><i class="fa fa-envelope"></i>{{Invoice.CompanyEmail}}</td>
+                <td><i class="fa fa-phone"></i>{{Invoice.CompanyPhone}}</td>
+            </tr>
+        </table>
+        <h1>INVOICE</h1>
+        <div id="description" >
+            {{Invoice.Description}}
+        </div>
+        <table id="meta">
+            <thead>
+            <tr>
+                <th>Invoice #</th>
+                {% if Invoice.InvoiceReference %}
+                <th>Invoice Ref</th>
+                {% endif %}
+                <th>Date</th>
+                <th>Due</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{Invoice.InvoiceNumber}}</td>
+                {% if Invoice.InvoiceReference %}
+                <td>{{Invoice.InvoiceReference}}</td>
+                {% endif %}
+                <td>{{Invoice.Date | date: '%d/%m/%Y' }}</td>
+                <td>{{Invoice.DateDue | date: '%d/%m/%Y' }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

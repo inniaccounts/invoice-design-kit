@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/pdfkit/pdfkit.git
+  revision: acfd24299b62003a3bf24c46e2288f1c24adbe21
+  specs:
+    pdfkit (0.7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -19,6 +25,7 @@ GEM
       guard
       rake
     hitimes (1.2.2)
+    json (1.8.3)
     liquid (2.6.2)
     listen (2.9.0)
       celluloid (>= 0.15.2)
@@ -30,7 +37,6 @@ GEM
     notiffany (0.0.6)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    pdfkit (0.5.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -51,6 +57,7 @@ PLATFORMS
 
 DEPENDENCIES
   guard-rake
+  json
   liquid
-  pdfkit
+  pdfkit!
   sass

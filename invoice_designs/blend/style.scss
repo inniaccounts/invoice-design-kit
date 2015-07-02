@@ -3,22 +3,30 @@
 
 $font-title: Helvetica, sans-serif  !default;
 $font-body: Helvetica, sans-serif  !default;
-$color-primary: #000066 !default;
+$color-primary: #DE4498 !default;
 $logo: false !default;  // url('http://placehold.it/350x100')
+$logo: url('http://placehold.it/350x100');
 
 /******************************/
+
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+$font-title: 'Lobster';
+
+$border-color: #C9C8C8;
+$color-secondary: #AAA;
 
 body {
   font: 13px/1.1 $font-body;
   margin: 0;
   padding: 1px; // Intentional: to allow table borders to render correctly
+  vertical-align: top;
+  height:100%;
 }
 
-section#invoice {
-  margin: 0 auto;
-  height:100%;
-  position:relative;
-  margin-bottom:-200px;
+//  margin: 0 auto;
+ // height:100%;
+//  position:relative;
+  // margin-bottom:-200px;
 
   h2 {
     font-family:  $font-title;
@@ -34,17 +42,15 @@ section#invoice {
       padding: 5px;
     }
     th {
-      background-color:$color-primary;
-      color:white;
       font-family: $font-title;
     }
   }
 
 
   section#header {
-    min-height:380px;
-    margin-bottom:20px;
-    position: relative;
+    background-color: red;
+    margin-top:1cm;
+    height:7cm;
 
     // Clearfix:
     &:after {
@@ -53,78 +59,106 @@ section#invoice {
       clear: both;
     }
 
-    #identity {
-      max-width:50%;
-      float:left;
-      min-height: 200px;
+    .left {
+      width:50%;
+      float: left;
+    }
+    .right {
+      width:50%;
+      float: left;
+    }
 
-      @if $logo {
-        .logo {
-          content:$logo;
-          max-width:350px;
-          max-height:100px;
-          margin-bottom: 1em;
-        }
-      }
-
-      .company-name {
-        font-weight: bold;
-        font-family: $font-title;
-      }
-      .phone {
-        margin-top:10px;
+    @if $logo {
+      #logo {
+        content:$logo;
+        max-width:350px;
+        max-height:100px;
+        margin-bottom: 1em;
       }
     }
 
-    #meta {
-      max-width:40%;
-      float:right;
-      text-align: center;
-
-      h1  {
-        text-align: center;
-        font: 32px/1.1 $font-title;
-        font-weight: bold ;
-        color:$color-primary;
-        margin:0;
-        padding-top:1em;
-        padding-bottom: 3px;
-      }
-
-      table {
-        font-size:13px;
-
-        td, th {
-          border:1px solid black;
-          text-align: center;
-          padding:3px;
-        }
-      }
-
+    #company {
+      color:$color-secondary;
     }
 
     #customer {
-      margin-top:1em;
-      clear:both;
-      float:left;
-      width:55%;
+      color:$color-secondary;
     }
 
-    #notes {
-      margin-top:1em;
-      float:left;
+    #icons {
+      width:100%;
+
+      td {
+        border-bottom: 1px solid $border-color;
+        border-right: 1px solid $border-color;
+        width:50%;
+        color:$color-secondary;
+        font-size:10px;
+        padding-top: 1em;
+        padding-bottom: 2em;
+
+        &:last-child {
+          border-right:none;
+          padding-left:2em;
+        }
+
+        i {
+          color:$color-primary;
+          display: block;
+          font-size: 18px;
+          margin-bottom: 0.5em;
+        }
+      }
+    }
+
+    h1 {
+      text-align: left;
+      font: 45px/1.1 $font-title;
+      font-weight: normal ;
+      color:$color-secondary;
+      margin:0;
+      padding-top:1em;
+      padding-bottom: 0.5em;
     }
 
     #description {
       font-size:16px;
-      font-weight: bold;
       margin-bottom:0px;
-      position:absolute;
-      bottom:-20px;
-      width:100%;
       font-family: $font-title;
 
     }
+
+    table#meta {
+      width:100%;
+      font-size:13px;
+
+      td, th {
+        background-color:$color-primary;
+        color:white;
+        text-align: left;
+        padding:0;
+        padding-left: 20px;
+      }
+
+      td {
+        padding-bottom:20px;
+        font-size:16px;
+      }
+      th {
+        padding-top:20px;
+        font-size:14px;
+        font-weight: normal;
+      }
+
+    }
+
+    #identity {
+      min-height: 200px;
+      color: $color-secondary;
+
+
+    }
+
 
   }
 
@@ -134,21 +168,17 @@ section#invoice {
     table {
       width: 100%;
       margin:0;
-      border-bottom: 1px solid black;
 
       thead {display: table-header-group;}
 
       // Global styles:
       tr {
-        height: 20px;
+        height: 40px;
         page-break-inside: avoid;
-        th {
-          border:1px solid black;
-        }
+        line-height: 40px;
 
         td {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
+
           vertical-align: top;
 
           &.qty, &.vatrate {
@@ -235,6 +265,13 @@ section#invoice {
     clear:both;
     font-size:10px;
     width:100%;
-  }
+    height:4cm;
+    margin-bottom:1cm;
+    background-color: red;
+    position: relative;
 
-}
+    #legal {
+      position: absolute;
+      bottom:0;
+    }
+  }

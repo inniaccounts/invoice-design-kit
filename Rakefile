@@ -12,6 +12,8 @@ end
 
 require_relative 'lib/app'
 
+task :default => [:generate_previews]
+
 desc 'Generates invoice previews'
 task :generate_previews do
   pg = PreviewGenerator.new
