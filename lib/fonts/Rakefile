@@ -1,0 +1,41 @@
+require 'nokogiri'
+require 'open-uri'
+
+# The list of supported fonts and the URL for downloading
+FONTS = %w(lobster montserrat neuton lato merriweather playfairdisplay oswald quattrocento cardo quicksand dancingscript ebgaramond cantarell fjallaone cabin)
+GIT_URL = 'https://github.com/google/fonts/tree/master/ofl'
+
+# Try bundle exec rake download_fonts
+
+#task :default => [:check_fonts]
+
+desc 'Downloads Google fonts'
+task :download_fonts do
+  FONTS.each do |font|
+
+    puts "Fetching #{font}"
+
+    begin
+      page = Nokogiri::HTML(open("#{GIT_URL}/#{font}"))
+    rescue
+      puts " Error: could not open github page"
+      next
+    end
+
+    res = page.css('table.files .js-directory-link')
+
+    res.each do |link|
+      if link['href'].index ".ttf"
+        open(link['title'], 'wb') do |file|
+          file << open("https://github.com/#{link['href']}?raw=true").read
+        end
+      end
+    end
+
+  end
+end
+
+desc 'Checks if fonts are installed correctly'
+task :check_fonts do
+  puts 'TODO'
+end

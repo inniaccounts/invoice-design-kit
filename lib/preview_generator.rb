@@ -61,26 +61,28 @@ class PreviewGenerator
   end
 
   def load_and_validate_settings(invoice_name)
+
+    setting_names = %w(name author page-margin-top page-margin-bottom page-margin-left page-margin-right)
+
     errors = []
 
     begin
-      settings = File.open("invoice_designs/#{invoice_name}/invoice.json", "rb").read
-      settings = JSON.parse(settings)
+      source = File.open("invoice_designs/#{invoice_name}/style.scss", "rb").read
+      settings = Hash.new
+      setting_names.each do |sn|
+        m = /\$#{sn}:\s*(.*)\s*;/.match(source)
+        if m
+          settings[sn] = m[1].gsub("'","")
+        end
+      end
     rescue Exception => e
-      errors << ' Error: could not load json'
+      errors << ' Error: could not load css'
       errors << ' ' + e.message
       settings = Hash.new
     end
 
     errors << ' Error: missing name from json' if !settings.has_key? 'name'
     errors << ' Error: missing author from json' if !settings.has_key? 'author'
-
-    if settings.has_key? 'userSettings'
-      es = settings['userSettings'] - %w(font-title font-body color-primary color-secondary)
-      if (es).count > 0
-        errors << " Error: unknown userSettings in json (#{es.join(', ')})"
-      end
-    end
 
     if errors.length > 0
       puts errors.join("\n")
@@ -89,10 +91,10 @@ class PreviewGenerator
 
     # Defaults
     settings['orientation'] = 'Portrait' if !settings.has_key?('orientation')
-    settings['marginTop'] = '1cm' if !settings.has_key?('marginTop')
-    settings['marginRight'] = '1cm' if !settings.has_key?('marginRight')
-    settings['marginBottom'] = '1cm' if !settings.has_key?('marginBottom')
-    settings['marginLeft'] = '1cm' if !settings.has_key?('marginLeft')
+    settings['page-margin-top'] = '1cm' if !settings.has_key?('page-margin-top')
+    settings['page-margin-right'] = '1cm' if !settings.has_key?('page-margin-right')
+    settings['page-margin-bottom'] = '1cm' if !settings.has_key?('page-margin-bottom')
+    settings['page-margin-left'] = '1cm' if !settings.has_key?('page-margin-left')
 
     settings
   end
@@ -142,10 +144,10 @@ class PreviewGenerator
     pdf_settings = Hash.new
     pdf_settings[:page_size] = 'A4'
     pdf_settings[:orientation] = settings['orientation']
-    pdf_settings[:margin_top] = settings['marginTop']
-    pdf_settings[:margin_right] = settings['marginRight']
-    pdf_settings[:margin_bottom] = settings['marginBottom']
-    pdf_settings[:margin_left] = settings['marginLeft']
+    pdf_settings[:margin_top] = settings['page-margin-top']
+    pdf_settings[:margin_right] = settings['page-margin-right']
+    pdf_settings[:margin_bottom] = settings['page-margin-bottom']
+    pdf_settings[:margin_left] = settings['page-margin-left']
 
     # Approach:
     #  Create a temp directory
@@ -174,7 +176,6 @@ class PreviewGenerator
     # Copy css
     FileUtils.copy("invoice_previews/#{invoice_name}/style.css", "#{dir}/style.css")
     FileUtils.copy("lib/resources/font-awesome.css", "#{dir}/font-awesome.css")
-    FileUtils.copy("lib/resources/fontawesome-webfont.ttf", "#{dir}/fontawesome-webfont.ttf")
 
 
     # Generate PDF

@@ -1,16 +1,18 @@
-/******************************/
-/* Global variables:          */
+/* Theme settings: */
+$name:                'Blend';
+$author:              'inniAccounts';
+$orientation:         'Portrait';
+$page-margin-top:     8cm;
+$page-margin-bottom:  8cm;
+$page-margin-left:    1cm;
+$page-margin-right:   1cm;
 
+/* User settings & defaults: */
 $font-title: Helvetica, sans-serif  !default;
 $font-body: Helvetica, sans-serif  !default;
 $color-primary: #DE4498 !default;
+$color-secondary: #333 !default;
 $logo: false !default;  // url('http://placehold.it/350x100')
-$logo: url('http://placehold.it/350x100');
-
-/******************************/
-
-@import url(http://fonts.googleapis.com/css?family=Lobster);
-$font-title: 'Lobster';
 
 $border-color: #C9C8C8;
 $color-secondary: #AAA;

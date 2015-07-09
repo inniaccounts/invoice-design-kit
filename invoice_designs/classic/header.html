@@ -1,0 +1,61 @@
+<section id="header">
+
+    <div id="identity">
+        <div class="logo"></div>
+        <div class="company-name">
+            {{Invoice.CompanyName}}
+        </div>
+        <div class="address">
+            {{Invoice.CompanyAddress | newline_to_br}}
+        </div>
+        <div class="phone">
+            <label>Phone: &nbsp; </label>{{Invoice.CompanyPhone}}
+        </div>
+        <div class="email">
+            <label>Email: &nbsp; </label>{{Invoice.CompanyEmail}}
+        </div>
+    </div>
+
+    <div id="meta">
+        <h1>INVOICE</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>INVOICE #</th>
+                {% if Invoice.InvoiceReference %}
+                <th>INVOICE REF</th>
+                {% endif %}
+                <th>DATE</th>
+                <th>DUE</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{Invoice.InvoiceNumber}}</td>
+                {% if Invoice.InvoiceReference %}
+                <td>{{Invoice.InvoiceReference}}</td>
+                {% endif %}
+                <td>{{Invoice.Date | date: '%d/%m/%Y' }}</td>
+                <td>{{Invoice.DateDue | date: '%d/%m/%Y' }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="customer">
+        <h2>Invoice to:</h2>
+        <div class="address">{{Invoice.InvoiceAddress | newline_to_br}}</div>
+    </div>
+
+    <div id="notes">
+        <h2>Notes:</h2>
+        <div>
+            {{Invoice.InvoiceMessage | newline_to_br}}
+        </div>
+    </div>
+
+    <div id="description" >
+        {{Invoice.Description}}
+    </div>
+
+</section>
