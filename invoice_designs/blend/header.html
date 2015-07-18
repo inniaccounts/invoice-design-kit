@@ -4,7 +4,7 @@
         <div id="company">
             <h2>{{Invoice.CompanyName}}</h2>
             <div class="address">
-                {{Invoice.TradingAddress | newline_to_br}}
+                {{Invoice.CompanyAddress | newline_to_br}}
             </div>
         </div>
         <div id="customer">
@@ -16,23 +16,34 @@
     </div>
     <div class="right">
         <table id="icons">
+            {% if Invoice.CompanyPhone %}
             <tr>
-                <td><i class="fa fa-envelope"></i>{{Invoice.CompanyEmail}}</td>
-                <td><i class="fa fa-phone"></i>{{Invoice.CompanyPhone}}</td>
+                <th><i class="fa fa-phone"></i></th>
+                <td>{{Invoice.CompanyPhone}}</td>
             </tr>
+            {% endif %}
+            {% if Invoice.CompanyEmail %}
+            <tr>
+                <th><i class="fa fa-envelope"></i></th>
+                <td>{{Invoice.CompanyEmail}}</td>
+            </tr>
+            {% endif %}
+            {% if Invoice.CompanyURL %}
+            <tr>
+                <th><i class="fa fa-globe"></i></th>
+                <td>{{Invoice.CompanyURL}}</td>
+            </tr>
+            {% endif %}
         </table>
         <h1>INVOICE</h1>
-        <div id="description" >
-            {{Invoice.Description}}
-        </div>
         <table id="meta">
             <thead>
             <tr>
-                <th>Invoice #</th>
+                <th>Number</th>
                 {% if Invoice.InvoiceReference %}
-                <th>Invoice Ref</th>
+                <th>Reference</th>
                 {% endif %}
-                <th>Date</th>
+                <th>Issued</th>
                 <th>Due</th>
             </tr>
             </thead>
@@ -47,5 +58,8 @@
             </tr>
             </tbody>
         </table>
+        <div id="description" >
+            {{Invoice.Description}}
+        </div>
     </div>
 </section>

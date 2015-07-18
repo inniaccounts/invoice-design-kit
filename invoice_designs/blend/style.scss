@@ -2,203 +2,182 @@
 $name:                'Blend';
 $author:              'inniAccounts';
 $orientation:         'Portrait';
-$page-margin-top:     8cm;
-$page-margin-bottom:  8cm;
+$page-margin-top:     10cm;
+$page-margin-bottom:  2cm;
 $page-margin-left:    1cm;
 $page-margin-right:   1cm;
 
 /* User settings & defaults: */
-$font-title: Helvetica, sans-serif  !default;
-$font-body: Helvetica, sans-serif  !default;
-$color-primary: #DE4498 !default;
+$font-title: Montserrat, sans-serif  !default;
+$font-body: Cardo, sans-serif  !default;
+$color-primary: #882251 !default;
 $color-secondary: #333 !default;
-$logo: false !default;  // url('http://placehold.it/350x100')
+$logo: false !default;
 
-$border-color: #C9C8C8;
-$color-secondary: #AAA;
+$border-color: change-color($color-secondary, $lightness: 70);
+
+$base-font-size:11px;
+
+//
+// $logo: url('http://placehold.it/350x100');
 
 body {
-  font: 13px/1.1 $font-body;
+  font: $base-font-size $font-body;
+  line-height: 1.1em;
   margin: 0;
   padding: 1px; // Intentional: to allow table borders to render correctly
   vertical-align: top;
   height:100%;
 }
 
-//  margin: 0 auto;
- // height:100%;
-//  position:relative;
-  // margin-bottom:-200px;
+h2 {
+  font-family:  $font-title;
+  font-size:inherit;
+  font-weight: bold;
+  margin:0;
+  text-transform: uppercase;
+}
 
-  h2 {
-    font-family:  $font-title;
-    font-size:inherit;
-    font-weight: bold;
-    margin:0;
-    text-transform: uppercase;
+table {
+  border-collapse: collapse;
+  td, th {
+    padding: 5px;
+  }
+  th {
+    font-family: $font-title;
+  }
+}
+
+
+section#header {
+  margin-top:1cm;
+  height:9cm;
+
+  // Clearfix:
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
   }
 
-  table {
-    border-collapse: collapse;
+  .left {
+    width:49%;
+    float: left;
+  }
+  .right {
+    width:49%;
+    float: right;
+  }
+
+  @if $logo {
+    #logo {
+      content:$logo;
+      max-width:350px;
+      max-height:100px;
+      margin-bottom: 1em;
+    }
+  }
+
+  #company {
+    color:$color-secondary;
+  }
+
+  #customer {
+    margin-top:1em;
+    color:$color-secondary;
+  }
+
+  #icons {
+    width:100%;
+
+    th, td {
+      text-align: left;
+      color: change-color($color-secondary, $lightness: 60);
+      font-size:10px;
+      padding:0 0 0.6em 0;
+    }
+    th {width:1.5em;}
+
+    border-bottom: 1px solid $border-color;
+
+  }
+
+  h1 {
+    text-align: left;
+    font: 55px/1 $font-title;
+    font-weight: bold ;
+    color:$color-primary;
+    margin:$base-font-size*2 0;
+  }
+
+  table#meta {
+    width:100%;
+    font-size:$base-font-size;
+    background-color:$color-primary;
+
     td, th {
-      padding: 5px;
+      color:white;
+      text-align: left;
+      padding:0;
+      padding-left: $base-font-size;
+    }
+
+    td {
+      padding-bottom:$base-font-size;
+      font-size:$base-font-size;
+      font-weight: bold;
+      font-family: $font-title;
     }
     th {
-      font-family: $font-title;
+      padding-top:$base-font-size;
+      font-size:$base-font-size;
+      font-weight: normal;
     }
+
   }
 
+  #description {
+    font-size:$base-font-size;
+    margin:1em 0 0 0;
+    font-family: $font-body;
+    color:$color-secondary;
+  }
 
-  section#header {
-    background-color: red;
-    margin-top:1cm;
-    height:7cm;
+}
 
-    // Clearfix:
-    &:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
 
-    .left {
-      width:50%;
-      float: left;
-    }
-    .right {
-      width:50%;
-      float: left;
-    }
+section#lines {
 
-    @if $logo {
-      #logo {
-        content:$logo;
-        max-width:350px;
-        max-height:100px;
-        margin-bottom: 1em;
-      }
-    }
+  table {
+    width: 100%;
+    margin:0;
 
-    #company {
-      color:$color-secondary;
-    }
+    thead {display: table-header-group;}
 
-    #customer {
-      color:$color-secondary;
-    }
+    tr {
+      page-break-inside: avoid;
 
-    #icons {
-      width:100%;
 
       td {
-        border-bottom: 1px solid $border-color;
-        border-right: 1px solid $border-color;
-        width:50%;
+        font-size:$base-font-size;
+        vertical-align: top;
+        padding:5px 0;
         color:$color-secondary;
-        font-size:10px;
-        padding-top: 1em;
-        padding-bottom: 2em;
-
-        &:last-child {
-          border-right:none;
-          padding-left:2em;
-        }
-
-        i {
-          color:$color-primary;
-          display: block;
-          font-size: 18px;
-          margin-bottom: 0.5em;
-        }
-      }
-    }
-
-    h1 {
-      text-align: left;
-      font: 45px/1.1 $font-title;
-      font-weight: normal ;
-      color:$color-secondary;
-      margin:0;
-      padding-top:1em;
-      padding-bottom: 0.5em;
-    }
-
-    #description {
-      font-size:16px;
-      margin-bottom:0px;
-      font-family: $font-title;
-
-    }
-
-    table#meta {
-      width:100%;
-      font-size:13px;
-
-      td, th {
-        background-color:$color-primary;
-        color:white;
-        text-align: left;
-        padding:0;
-        padding-left: 20px;
       }
 
-      td {
-        padding-bottom:20px;
-        font-size:16px;
+      td:first-child {
+        padding-left: 3px;
       }
-      th {
-        padding-top:20px;
-        font-size:14px;
-        font-weight: normal;
-      }
-
-    }
-
-    #identity {
-      min-height: 200px;
-      color: $color-secondary;
-
-
-    }
-
-
-  }
-
-
-  section#lines {
-
-    table {
-      width: 100%;
-      margin:0;
-
-      thead {display: table-header-group;}
-
-      // Global styles:
-      tr {
-        height: 40px;
-        page-break-inside: avoid;
-        line-height: 40px;
-
-        td {
-
-          vertical-align: top;
-
-          &.qty, &.vatrate {
-            text-align: center;
-          }
-
-          &.unit, &.price {
-            text-align: right;
-          }
-
-        }
-
-        td, th {
-          font-size:13px;
-        }
+      td:last-child  {
+        padding-right: 3px;
       }
 
       th {
+        font-size:$base-font-size*1.3;
+        color:$color-primary;
+        padding:4px 0;
+        border-bottom: 1px solid $color-primary;
+
         &.description {
           text-align: left;
           width: auto;
@@ -212,68 +191,125 @@ body {
         }
       }
 
-      tbody {
-        tr:nth-child(2n+1) td {
-          background-color: #eeeeee;
-        }
+      .qty, .vatrate {
+        text-align: center;
       }
 
-    }
-
-  }
-
-  section#totals {
-    margin-top:3px;
-
-    table {
-      float: right;
-      td {
-        width:110px;
-        font-size:13px;
+      .unit, .price {
         text-align: right;
-        border:1px solid black;
-
-        &.label {font-size:10px; text-transform: uppercase}
-
-      }
-
-      tr.subtotal {
-      }
-
-      tr.vat {
-      }
-
-      tr.total td {
-        &.label {font-size:10px; text-transform: uppercase; font-weight: bold;}
-        font-size:18px;
       }
     }
 
+
+    tbody {
+      tr:nth-child(2n+1) td {
+        background-color: change-color($color-secondary, $lightness: 95);
+      }
+    }
+
+  }
+
+}
+
+section#totals {
+
+  table {
+    float: right;
+    font-family: $font-title;
+
+
+    td {
+      width:77px;
+      font-size:13px;
+      text-align: right;
+      padding: 5px 0;
+      color: $color-secondary;
+
+      &.label {
+        font-weight:bold;
+      }
+
+      &.base {
+        display: none;
+      }
+
+      &.base, &.gbp {
+        padding-right: 3px;
+      }
+
+    }
+
+    tr.total {
+      background-color: $color-primary;
+
+      td {
+        &.label {
+          font-size: 18px;
+          font-weight: bold;
+        }
+        padding-top:8px;
+        padding-bottom:8px;
+        background-color: $color-primary;
+        color: white;
+        font-size: 18px;
+      }
+    }
+  }
+
+
+  &.non-gbp-invoice {
     td.base {
-      display: none;
+      display: table-cell;
+    }
+    td.gbp {
+      padding-right:0;
+    }
+  }
+
+}
+
+section#notes {
+  padding-top:1em;
+
+  h2, div {
+    color:$color-secondary;
+  }
+}
+
+section#footer {
+  font-size:10px;
+  width:100%;
+  height:1cm;
+  margin-bottom:1cm;
+  clear:both;
+
+  #line {
+    div {
+      background: linear-gradient(90deg, $color-primary, lighten($color-primary, 20%));
+      background: -webkit-linear-gradient(left, $color-primary, lighten($color-primary, 20%));
+      display: block;
+      min-height:5px;
     }
 
-    &.non-gbp-invoice {
-      td.base {
-        display: inherit;
-      }
+    #l1 {
+      float:left;
+      width:30%;
     }
+
+    #l2 {
+      float:right;
+      width:70%;
+    }
+
 
   }
 
-  section#footer {
-//    position:fixed;
- //   bottom:0;
+  #legal {
     clear:both;
-    font-size:10px;
-    width:100%;
-    height:4cm;
-    margin-bottom:1cm;
-    background-color: red;
-    position: relative;
-
-    #legal {
-      position: absolute;
-      bottom:0;
-    }
+    padding-top:1em;
+    margin:0 auto;
+    max-width: 60%;
+    text-align: center;
+    color:change-color($color-secondary, $lightness: 50);
   }
+}
