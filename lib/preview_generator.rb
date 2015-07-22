@@ -7,6 +7,10 @@ require 'tempfile'
 
 PDFKit.configure do |config|
   config.verbose = true
+
+  if RUBY_PLATFORM =~ /win32/
+    config.wkhtmltopdf = 'c:\program files\wkhtmltopdf\bin\wkhtmltopdf'
+  end
 end
 
 class PreviewGenerator
