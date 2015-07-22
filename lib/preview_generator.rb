@@ -8,8 +8,8 @@ require 'tempfile'
 PDFKit.configure do |config|
   config.verbose = true
 
-  if RUBY_PLATFORM =~ /win32/
-    config.wkhtmltopdf = 'c:\program files\wkhtmltopdf\bin\wkhtmltopdf'
+  if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /i386-mingw32/
+      config.wkhtmltopdf = 'c:\progra~1\wkhtmltopdf\bin\wkhtmltopdf.exe'
   end
 end
 
