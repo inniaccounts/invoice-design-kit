@@ -3,14 +3,19 @@ require 'sass'
 require 'yaml'
 require 'pdfkit'
 require 'tempfile'
+require 'rbconfig'
+
+def is_windows?
+  !(RbConfig::CONFIG['host_os'] =~ /mswin|msys|mingw|cygwin|bccwin|wince/).nil?
+end
 
 PDFKit.configure do |config|
   config.verbose = true
-
-  if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /i386-mingw32/
-    config.wkhtmltopdf = 'c:\progra~1\wkhtmltopdf\bin\wkhtmltopdf'
+  if is_windows?
+    config.wkhtmltopdf = 'c:\progra~1\wkhtmltopdf\bin\wkhtmltopdf.exe'
   end
 end
+
 
 class PreviewGenerator
 
@@ -162,14 +167,17 @@ class PreviewGenerator
     # Set up temp directory
     dir = Dir.mktmpdir
 
+	prefix = "file://"
+	prefix += '/' if is_windows?
+	
     if header
       File.write("#{dir}/header.html", @html_header + header + @html_footer)
-      pdf_settings[:header_html] = "file://#{dir}/header.html"
+      pdf_settings[:header_html] = "#{prefix}#{dir}/header.html"	  
     end
 
     if footer
       File.write("#{dir}/footer.html", @html_header + footer + @html_footer)
-      pdf_settings[:footer_html] = "file://#{dir}/footer.html"
+	  pdf_settings[:footer_html] = "#{prefix}#{dir}/footer.html"	  
     end
 
     # We'll always have at least a body...
@@ -185,8 +193,8 @@ class PreviewGenerator
     kit = PDFKit.new(File.new(body_path), pdf_settings)
     kit.to_file("invoice_previews/#{invoice_name}/invoice.pdf")
 
-    # Remove temp dir
-    FileUtils.remove_entry_secure dir
+    # Remove temp dir - fails on windows, let the OS take care of tidying up
+    # FileUtils.remove_entry_secure dir
   end
 
 
