@@ -2,14 +2,13 @@ require 'liquid'
 require 'sass'
 require 'yaml'
 require 'pdfkit'
-require 'json'
 require 'tempfile'
 
 PDFKit.configure do |config|
   config.verbose = true
 
-  if RUBY_PLATFORM =~ /win32/
-    config.wkhtmltopdf = 'c:\program files\wkhtmltopdf\bin\wkhtmltopdf'
+  if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /i386-mingw32/
+    config.wkhtmltopdf = 'c:\progra~1\wkhtmltopdf\bin\wkhtmltopdf'
   end
 end
 
@@ -85,8 +84,8 @@ class PreviewGenerator
       settings = Hash.new
     end
 
-    errors << ' Error: missing name from json' if !settings.has_key? 'name'
-    errors << ' Error: missing author from json' if !settings.has_key? 'author'
+    errors << ' Error: missing name from settings' if !settings.has_key? 'name'
+    errors << ' Error: missing author from settings' if !settings.has_key? 'author'
 
     if errors.length > 0
       puts errors.join("\n")
@@ -144,7 +143,7 @@ class PreviewGenerator
 
   def generate_pdf(invoice_name, settings, header, body, footer)
 
-    # Prepare settings for PDFKit, based on settings in invoice json file
+    # Prepare settings for PDFKit, based on settings in invoice SCSS file
     pdf_settings = Hash.new
     pdf_settings[:page_size] = 'A4'
     pdf_settings[:orientation] = settings['orientation']
