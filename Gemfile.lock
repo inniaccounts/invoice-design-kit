@@ -68,6 +68,3 @@ DEPENDENCIES
   liquid
   pdfkit!
   sass
-
-BUNDLED WITH
-   1.10.5

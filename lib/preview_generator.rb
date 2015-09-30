@@ -179,6 +179,11 @@ class PreviewGenerator
     pdf_settings[:margin_bottom] = settings['page-margin-bottom']
     pdf_settings[:margin_left] = settings['page-margin-left']
     # pdf_settings[:zoom] = 1.33
+    #pdf_settings[:disable_smart_shrinking] = true
+    if !is_windows?
+      # Windows is generally 96dpi, non-windows 72dpi
+      pdf_settings[:zoom] = 0.75
+    end
 
     # Approach:
     #  Create a temp directory

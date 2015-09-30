@@ -17,7 +17,7 @@ body {
   font: 17px/1.1 $font-body;
   margin: 0;
   padding: 1px; // Intentional: to allow table borders to render correctly
-  width:910px;
+  width:920px;
 }
 
 h2 {
@@ -42,10 +42,7 @@ table {
 
 
 section#header {
-  // The header is vertically aligned to the bottom
-  // thus this creates a 1.5cm margin at the top
-  height: $page-margin-top; // - 1.5cm;
-
+  height: ($page-margin-top - 1.5cm) * 1.33;
   position: relative;
 
   // Clearfix:
