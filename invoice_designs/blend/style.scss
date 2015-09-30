@@ -217,6 +217,7 @@ section#totals {
   table {
     float: right;
     font-family: $font-title;
+    page-break-inside: avoid;
 
 
     td {

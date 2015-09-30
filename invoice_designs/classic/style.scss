@@ -203,6 +203,7 @@ section#totals {
 
   table {
     float: right;
+    page-break-inside: avoid;
     td {
       width:110px;
       font-size:17px;
