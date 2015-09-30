@@ -6,18 +6,18 @@ $page-margin-top:     11.5cm;
 $page-margin-bottom:  1.5cm;
 $page-margin-left:    1cm;
 $page-margin-right:   1cm;
-
+ 
 /* User settings & defaults: */
-$font-title: Helvetica, sans-serif  !default;
-$font-body: Helvetica, sans-serif  !default;
+$font-title: Arial, sans-serif  !default;
+$font-body: Arial, sans-serif  !default;
 $color-primary: #000066 !default;
 $logo: false !default;  // url('http://placehold.it/350x100')
 
-
 body {
-  font: 13px/1.1 $font-body;
+  font: 17px/1.1 $font-body;
   margin: 0;
   padding: 1px; // Intentional: to allow table borders to render correctly
+  width:910px;
 }
 
 h2 {
@@ -31,7 +31,7 @@ h2 {
 table {
   border-collapse: collapse;
   td, th {
-    padding: 5px;
+    padding: 7px;
   }
   th {
     background-color:$color-primary;
@@ -44,7 +44,7 @@ table {
 section#header {
   // The header is vertically aligned to the bottom
   // thus this creates a 1.5cm margin at the top
-  height: $page-margin-top - 1.5cm;
+  height: $page-margin-top; // - 1.5cm;
 
   position: relative;
 
@@ -58,13 +58,13 @@ section#header {
   #identity {
     max-width:50%;
     float:left;
-    min-height: 150px;
+    min-height: 200px;
 
     @if $logo {
       .logo {
         content:$logo;
-        max-width:350px;
-        max-height:100px;
+        max-width:465px;
+        max-height:133px;
         margin-bottom: 1em;
       }
     }
@@ -74,7 +74,7 @@ section#header {
       font-family: $font-title;
     }
     .phone {
-      margin-top:10px;
+      margin-top:13px;
     }
   }
 
@@ -85,21 +85,21 @@ section#header {
 
     h1  {
       text-align: center;
-      font: 32px/1.1 $font-title;
+      font: 43px/1.1 $font-title;
       font-weight: bold ;
       color:$color-primary;
       margin:0;
       padding-top:1em;
-      padding-bottom: 3px;
+      padding-bottom: 4px;
     }
 
     table {
-      font-size:13px;
+      font-size:17px;
 
       td, th {
         border:1px solid black;
         text-align: center;
-        padding:3px;
+        padding:4px;
       }
     }
 
@@ -118,7 +118,7 @@ section#header {
   }
 
   #description {
-    font-size:16px;
+    font-size:21px;
     font-weight: bold;
     margin-bottom:0px;
     position:absolute;
@@ -151,7 +151,7 @@ section#lines {
     }
     // Global styles:
     tr {
-      height: 20px;
+      height: 26px;
       page-break-inside: avoid;
       th {
         border:1px solid black;
@@ -173,7 +173,7 @@ section#lines {
       }
 
       td, th {
-        font-size:13px;
+        font-size:17px;
       }
     }
 
@@ -184,10 +184,10 @@ section#lines {
       }
 
       &.qty, &.vatrate {
-        width: 48px;
+        width: 63px;
       }
       &.unit, &.price {
-        width: 80px;
+        width: 106px;
       }
     }
 
@@ -208,11 +208,11 @@ section#totals {
     float: right;
     td {
       width:110px;
-      font-size:13px;
+      font-size:17px;
       text-align: right;
       border:1px solid black;
 
-      &.label {font-size:10px; text-transform: uppercase}
+      &.label {font-size:13px; text-transform: uppercase}
 
     }
 
@@ -223,8 +223,8 @@ section#totals {
     }
 
     tr.total td {
-      &.label {font-size:10px; text-transform: uppercase; font-weight: bold;}
-      font-size:18px;
+      &.label {font-size:13px; text-transform: uppercase; font-weight: bold;}
+      font-size:23px;
     }
   }
 
@@ -244,7 +244,7 @@ section#footer {
   padding-top: 0.5cm;
   height: $page-margin-bottom;
   clear:both;
-  font-size:10px;
+  font-size:13px;
   width:100%;
 }
 

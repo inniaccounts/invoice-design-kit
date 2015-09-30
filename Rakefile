@@ -20,3 +20,4 @@ task :generate_previews do
   pg.generate
 end
 
+ 

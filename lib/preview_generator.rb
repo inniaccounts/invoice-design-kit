@@ -33,6 +33,28 @@ class PreviewGenerator
       end
       @invoice_data['Lines'] = lines
     end
+
+    if is_windows?
+      # There's a risk if you're on windows with a high resolution screen that your
+      # dpi will be > 96dpi, the standard for windows. This will cause invoices to be 
+      # the wrong size. I've not yet figured out how to get the dpi, so warn for large screens.
+
+        require 'dl' 
+        user32 = DL.dlopen("user32")
+        setaware = DL::CFunc.new(user32['SetProcessDPIAware'], DL::TYPE_INT)
+        r = setaware.call([])
+        gsm = DL::CFunc.new(user32['GetSystemMetrics'], DL::TYPE_INT)
+        x = gsm.call([0])
+        y = gsm.call([1])
+
+        if x >= 2000
+          puts 'WARNING TO WINDOWS USERS'
+          puts 'You appear to be using a high resolution display'
+          puts 'Unless the display is set to 96dpi your invoices may'
+          puts 'not preview correctly.'
+        end
+    end
+
   end
 
   def generate
@@ -156,6 +178,7 @@ class PreviewGenerator
     pdf_settings[:margin_right] = settings['page-margin-right']
     pdf_settings[:margin_bottom] = settings['page-margin-bottom']
     pdf_settings[:margin_left] = settings['page-margin-left']
+    # pdf_settings[:zoom] = 1.33
 
     # Approach:
     #  Create a temp directory
