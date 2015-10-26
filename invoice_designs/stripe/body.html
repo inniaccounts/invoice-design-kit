@@ -1,0 +1,71 @@
+<section id="items">
+    <div id="lines">
+        <table>
+            <thead>
+                <tr>
+                    <th class="number">No.</th>
+                    <th class="description">Item</th>
+                    <th class="qty">Quantity</th>
+                    <th class="vatrate">VAT</th>
+                    <th class="unit">Price</th>
+                    <th class="price">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="color-line"><td colspan="6"></td></tr>
+                {% for Line in Invoice.Lines %}
+                    <tr class="item-row">
+                        <td class="number bg-primary">{{forloop.index}}</td>
+                        <td class="description">{{Line.Description}}</td>
+                        <td class="qty">{{Line.Quantity}}</td>
+                        <td class="vatrate">{{Line.VATRate}}</td>
+                        <td class="unit">{{Line.UnitPrice}}</td>
+                        <td class="price">{{Line.AmountExVAT}}</td>
+                    </tr>
+                {% endfor %}
+                <tr class="color-line"><td colspan="6"></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="wrapper">
+        <table id="totals">
+            <tbody>
+                <tr>
+                    <td class="bg-primary"></td>
+                    <td class="title">Net:</td>
+                    <td colspan="2">{{Invoice.AmountNet}}</td>
+                </tr>
+                <tr>
+                    <td class="bg-primary"></td>
+                    <td class="title">VAT:</td>
+                    <td colspan="2">{{Invoice.AmountVAT}}</td>
+                </tr>
+                <tr>
+                    <td class="bg-primary"></td>
+                    <td class="title">Total:</td>
+                    <td class="total bg-primary" colspan="2">{{Invoice.AmountTotal}}</td>
+                </tr>
+                {% if Invoice.NonGBPVatInvoice %}
+                    <tr class="gbp-row net-gbp">
+                        <td class="bg-primary"></td>
+                        <td class="title"></td>
+                        <td class="label">NetGBP:</td>
+                        <td class="gbp">{{Invoice.AmountNetGBP}}</td>
+                    </tr>
+                    <tr class="gbp-row">
+                        <td class="bg-primary"></td>
+                        <td class="title"></td>
+                        <td class="label">VATGBP:</td>
+                        <td class="gbp">{{Invoice.AmountVATGBP}}</td>
+                    </tr>
+                    <tr class="gbp-row">
+                        <td class="bg-primary"></td>
+                        <td class="title"></td>
+                        <td class="label">TotalGBP:</td>
+                        <td class="gbp">{{Invoice.AmountTotalGBP}}</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</section>

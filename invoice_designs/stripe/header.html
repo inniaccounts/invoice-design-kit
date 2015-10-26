@@ -1,0 +1,58 @@
+<section id="header">
+    <div class="grey-bg">
+        <div class="blue-bg"></div>
+    </div>
+    <div class="wrapper">
+        <div id="identity">
+            <div class="main-title">
+                <div class="logo"></div>
+                <div class="company-name">
+                    {{Invoice.CompanyName}}
+                </div>
+                <div class="reference-block">
+                    <div class="reference">
+                        Invoice
+                        {% if Invoice.InvoiceReference %}
+                            {{Invoice.InvoiceReference}}
+                            <div class="invoice-number">{{Invoice.InvoiceNumber}}</div>
+                        {% else %}
+                            {{Invoice.InvoiceNumber}}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <table class="company-info">
+                <tbody>
+                    <tr class="color-line"><td colspan="5"></td></tr>
+                    <tr>
+                        <td class="bg-primary"><i class="fa fa-envelope"></i></td>
+                        <td class="title align-top">From:</td>
+                        <td class="from align-top">
+                             CompanyName
+                            {{Invoice.CompanyAddress | newline_to_br}}
+                            {{Invoice.CompanyEmail}}
+                            {{Invoice.CompanyPhone}}
+                        </td>
+                        <td class="title align-top">To:</td>
+                        <td class="align-top">{{Invoice.InvoiceAddress | newline_to_br}}</td>
+                    </tr>
+                    <tr class="color-line"><td colspan="5"></td></tr>
+                    <tr>
+                        <td class="bg-primary"><i class="fa fa-calendar"></i></td>
+                        <td class="title">Date:</td>
+                        <td>{{Invoice.Date | date: '%d/%m/%Y'}}</td>
+                        <td class="title">Due date:</td>
+                        <td>{{Invoice.DateDue | date: '%d/%m/%Y'}}</td>
+                    </tr>
+                    <tr class="color-line"><td colspan="5"></td></tr>
+                    <tr>
+                        <td class="bg-primary"><i class="fa fa-file-text-o"></i></td>
+                        <td colspan="4">{{Invoice.Description}}</td>
+                    </tr>
+                    <tr class="color-line"><td colspan="5"></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

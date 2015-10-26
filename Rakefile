@@ -20,4 +20,9 @@ task :generate_previews do
   pg.generate
 end
 
- 
+desc 'Generates invoice QA previews'
+task :qa do
+  pg = PreviewGenerator.new
+  pg.generate_qa
+end
+

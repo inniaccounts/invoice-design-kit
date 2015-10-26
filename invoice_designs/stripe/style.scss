@@ -1,0 +1,342 @@
+/* Theme settings: */
+$name:                'Stripe';
+$author:              'inniAccounts';
+$orientation:         'Portrait';
+$page-margin-top:     12.2cm;
+$page-margin-bottom:  3.8cm;
+$page-margin-left:    0cm;
+$page-margin-right:   0cm;
+
+/* User settings & defaults: */
+$font-title: Arial, sans-serif  !default;
+$font-body: Arial, sans-serif  !default;
+$color-primary: #52c0e8 !default;
+$color-secondary: #231f20 !default;
+$logo: false !default;
+$bg-primary: #f3f3f4;
+$content-margin-left: 95px;
+$content-margin-right: 95px;
+$left-col-width: 55px;
+
+body {
+  font: 14px $font-body;
+  line-height: 15px;
+  margin: 0;
+  position: relative;
+  height: 100%;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.title {
+  color: $color-primary;
+}
+
+.bg-primary {
+  background-color: $color-primary;
+  color: #fff;
+}
+
+.blue-bg {
+  display: inline-block;
+  background-color: $color-primary;
+  margin-left: $content-margin-left;
+  width: $left-col-width;
+  height: 100%;
+}
+
+.empty-space {
+  position: absolute;
+  height: 100%;
+
+  .blue-bg {
+    margin-left: 0;
+  }
+}
+
+table {
+  border-collapse: collapse;
+
+  td {
+    padding: 15px 10px 15px 25px;
+    vertical-align: top;
+
+    &:first-child {
+      width: $left-col-width;
+      text-align: center;
+      font-size: 18px;
+      padding-right: 0;
+      padding-left: 0;
+      vertical-align: middle;
+    }
+  }
+
+  th {
+    color: $color-primary;
+    background-color: white;
+    font-family: $font-title;
+  }
+
+  td, th {
+    text-align: left;
+  }
+}
+
+
+section#header {
+  position: relative;
+  width: auto;
+
+  // Clearfix:
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .grey-bg {
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+
+  #identity {
+    min-height: 200px;
+    width: 100%;
+    margin-bottom: 40px;
+    margin-top: 50px;
+
+    @if $logo {
+      .logo {
+        content: $logo;
+        max-width: 465px;
+        max-height: 133px;
+        margin-bottom: 1em;
+        background-color: #e2e3e4;
+      }
+    }
+
+    .company-name {
+      float: left;
+      font-family: $font-title;
+      font-size: 22px;
+      padding: 20px;
+      background-color: #e3e3e4;
+      margin-right: 5px;
+      text-transform: uppercase;
+    }
+
+    .reference-block {
+      font-size: 35px;
+      padding-top: 15px;
+
+      .reference {
+        display: inline-block;
+
+        .invoice-number {
+          font-size: 12px;
+          text-align: right;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
+  table.company-info {
+    margin-top: 40px;
+    width: 100%;
+
+    .color-line {
+      height: 10px;
+
+      td {
+        background-color: $bg-primary;
+        padding: 0;
+      }
+    }
+
+    td {
+      border: none;
+      border-top: 5px solid white;
+      border-bottom: 5px solid white;
+      padding: 25px 0 25px 25px;
+
+      &:first-child {
+        padding: 0;
+      }
+
+      &.title {
+        width: 70px;
+      }
+
+      &.from {
+        width: 100px;
+      }
+    }
+  }
+}
+
+#items {
+  float: left;
+  width: 100%;
+  position: relative;
+
+  .empty-space {
+    position: absolute;
+  }
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  table {
+    width: 100%;
+    margin: 0;
+
+    thead {
+      display: table-header-group;
+
+      tr {
+        border-bottom: 3px solid $color-primary;
+
+        th {
+          font-weight: normal;
+          background-color: white;
+        }
+      }
+
+    }
+
+    .color-line {
+      height: 9px;
+
+      td {
+        background-color: $color-primary;
+        padding: 0;
+      }
+    }
+
+    tr {
+      td {
+        background-color: #f3f3f4;
+        border: 3px solid #fff;
+
+        &:first-child {
+          border-left: none;
+        }
+
+        &:last-child {
+          border-right: none;
+        }
+
+        &.bg-primary {
+          background-color: $color-primary;
+        }
+      }
+
+      .description {
+        padding-left: 27px;
+      }
+
+      .qty, .vatrate, .unit, .price {
+        text-align: right;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: 80px;
+      }
+    }
+  }
+  #lines {
+    position: relative;
+  }
+
+  #totals {
+    tr:first-child {
+      td {
+        border-top: none;
+      }
+    }
+
+    tr:last-child {
+      td {
+        border-bottom: none;
+      }
+    }
+
+    .gbp-row {
+      &.net-gbp td {
+        padding-top: 10px;
+      }
+
+      td {
+        color: #404041;
+        font-size: 13px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+    }
+
+    td {
+      text-align: right;
+      border-bottom: none;
+
+      &.bg-primary {
+        border-top-color: $color-primary;
+      }
+
+      &.title {
+        background-color: white;
+        width: 530px;
+        padding-right: 30px;
+      }
+
+      &.total {
+        font-size: 23px;
+      }
+
+      &.label {
+        padding-right: 0;
+        background-color: white;
+      }
+
+      &.gbp {
+        background-color: white;
+      }
+    }
+  }
+}
+
+.grey-bg {
+  background-color: $bg-primary;
+  height: 1cm;
+}
+
+.wrapper, #lines, #totals, #message {
+  margin-left: $content-margin-left;
+  margin-right: $content-margin-right;
+}
+
+#message {
+  border-top: 5px solid white;
+  border-bottom: 5px solid white;
+  color: #6d6e71;
+  font-size: 12px;
+}
+
+section#footer {
+  height: $page-margin-bottom;
+  clear: both;
+  font-size: 13px;
+  width: 100%;
+
+  .grey-bg-footer {
+    margin-top: 1cm;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+}

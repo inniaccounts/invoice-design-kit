@@ -23,16 +23,7 @@ class PreviewGenerator
     @html_header = File.open("lib/resources/header.html", "rb").read
     @html_footer = File.open("lib/resources/footer.html", "rb").read
     @invoice_data = YAML.load_file('lib/data.yaml')
-
-    if true # multi-page invoice
-      lines = Array.new
-      50.times do
-        @invoice_data['Lines'].each do |l|
-          lines << l.dup
-        end
-      end
-      @invoice_data['Lines'] = lines
-    end
+    @logo = File.open("lib/resources/logo.raw", "rb").read
 
     if is_windows?
       # There's a risk if you're on windows with a high resolution screen that your
@@ -62,15 +53,67 @@ class PreviewGenerator
 
     puts '------------------------'
     Dir.entries('invoice_designs').select {|entry| !entry.include?('.') }.each do |d|
-      generate_preview d
+      invoice_data = @invoice_data.clone
+
+      lines = Array.new
+      50.times do
+        invoice_data['Lines'].each do |l|
+          lines << l.dup
+        end
+      end
+      invoice_data['Lines'] = lines
+
+      generate_preview d, 'invoice', invoice_data
       puts '------------------------'
     end
   end
 
+  def generate_qa
+    Dir.mkdir('invoice_previews') unless Dir.exist?('invoice_previews')
+
+    puts '------------------------'
+    Dir.entries('invoice_designs').select {|entry| !entry.include?('.') }.each do |d|
+      FileUtils.copy("lib/resources/font-awesome.css", "invoice_previews/#{d}/font-awesome.css")
+
+      # Short / regular
+      invoice_data = @invoice_data.clone
+      generate_preview d, 'qa-short', invoice_data
+
+      # No ref no
+      invoice_data = @invoice_data.clone
+      invoice_data['InvoiceReference'] = nil
+      generate_preview d, 'qa-no-ref', invoice_data
+
+      # Multi-page
+      invoice_data = @invoice_data.clone
+      lines = Array.new
+      50.times do
+        invoice_data['Lines'].each do |l|
+          lines << l.dup
+        end
+      end
+      invoice_data['Lines'] = lines
+      generate_preview d, 'qa-long', invoice_data
+
+      # Overseas
+      invoice_data['NonGBPVatInvoice'] = true
+      generate_preview d, 'qa-overseas', invoice_data
+
+      # Colours and fonts
+      invoice_data = @invoice_data.clone
+      extra_css = '$color-primary:red;'
+      extra_css += '$color-secondary:green;'
+      extra_css += "$logo:url(data:#{@logo});"
+      generate_preview d, 'qa-styled', invoice_data, extra_css
+
+
+      puts '------------------------'
+    end
+  end
 
   private
 
-  def generate_preview(invoice_name)
+  def generate_preview(invoice_name, file_name, invoice_data, extra_css = nil)
     puts "Generating previews for '#{invoice_name}'"
     dir = "invoice_previews/#{invoice_name}/"
     Dir.mkdir(dir) unless Dir.exist?(dir)
@@ -78,14 +121,14 @@ class PreviewGenerator
     settings = load_and_validate_settings(invoice_name)
     return if !settings
 
-    css = generate_css invoice_name
+    css = generate_css invoice_name, file_name, extra_css
 
-    header = merge_html invoice_name, :header
-    body = merge_html invoice_name, :body
-    footer = merge_html invoice_name, :footer
+    header = merge_html invoice_name, :header, invoice_data
+    body = merge_html invoice_name, :body, invoice_data
+    footer = merge_html invoice_name, :footer, invoice_data
 
-    generate_html_preview invoice_name, header, body, footer
-    generate_pdf invoice_name, settings, header, body, footer if body && css
+    generate_html_preview invoice_name, header, body, footer, file_name
+    generate_pdf invoice_name, settings, header, body, footer, file_name if body && css
 
     puts ' DONE'
   end
@@ -129,14 +172,16 @@ class PreviewGenerator
     settings
   end
 
-  def generate_css(invoice_name)
+  def generate_css(invoice_name, file_name, extra_css)
     # CSS
     begin
-      source_scss = File.open("invoice_designs/#{invoice_name}/style.scss", "rb").read
+      source_scss = extra_css
+      source_scss = '' if source_scss.nil?
+      source_scss += File.open("invoice_designs/#{invoice_name}/style.scss", "rb").read
       engine = Sass::Engine.new(source_scss, :syntax => :scss)
       output_css = engine.render
       dir = "invoice_previews/#{invoice_name}/"
-      File.write(dir + 'style.css', output_css)
+      File.write(dir + "#{file_name}.css", output_css)
     rescue Exception => e
       puts ' Error: could not parse css'
       puts ' ' +e.message
@@ -145,7 +190,7 @@ class PreviewGenerator
     output_css
   end
 
-  def merge_html(invoice_name, part_name)
+  def merge_html(invoice_name, part_name, invoice_data)
     # Merges data in to liquify template tags
     # Does not add html headers / footers
     file_name = "invoice_designs/#{invoice_name}/#{part_name.to_s}.html"
@@ -153,7 +198,7 @@ class PreviewGenerator
 
     begin
       source_html = File.open(file_name, "rb").read
-      output_html = Liquid::Template.parse(source_html).render 'Invoice' => @invoice_data
+      output_html = Liquid::Template.parse(source_html).render 'Invoice' => invoice_data
     rescue Exception => e
       puts " Error: could not parse #{part_name} html"
       puts ' ' +e.message
@@ -163,12 +208,15 @@ class PreviewGenerator
     output_html
   end
 
-  def generate_html_preview(invoice_name, header, body, footer)
-    output_html = @html_header + header + body + footer + @html_footer
-    File.write("invoice_previews/#{invoice_name}/invoice.html", output_html)
+  def generate_html_preview(invoice_name, header, body, footer, file_name)
+    html_header = @html_header.gsub('style.css',"#{file_name}.css")
+    output_html = html_header + header + body + footer + @html_footer
+    File.write("invoice_previews/#{invoice_name}/#{file_name}.html", output_html)
   end
 
-  def generate_pdf(invoice_name, settings, header, body, footer)
+  def generate_pdf(invoice_name, settings, header, body, footer, file_name)
+
+    html_header = @html_header.gsub('style.css',"#{file_name}.css")
 
     # Prepare settings for PDFKit, based on settings in invoice SCSS file
     pdf_settings = Hash.new
@@ -199,27 +247,27 @@ class PreviewGenerator
 	prefix += '/' if is_windows?
 	
     if header
-      File.write("#{dir}/header.html", @html_header + header + @html_footer)
+      File.write("#{dir}/header.html", html_header + header + @html_footer)
       pdf_settings[:header_html] = "#{prefix}#{dir}/header.html"	  
     end
 
     if footer
-      File.write("#{dir}/footer.html", @html_header + footer + @html_footer)
+      File.write("#{dir}/footer.html", html_header + footer + @html_footer)
 	  pdf_settings[:footer_html] = "#{prefix}#{dir}/footer.html"	  
     end
 
     # We'll always have at least a body...
-    File.write("#{dir}/body.html", @html_header + body + @html_footer)
+    File.write("#{dir}/body.html", html_header + body + @html_footer)
     body_path = "#{dir}/body.html"
 
     # Copy css
-    FileUtils.copy("invoice_previews/#{invoice_name}/style.css", "#{dir}/style.css")
+    FileUtils.copy("invoice_previews/#{invoice_name}/#{file_name}.css", "#{dir}/#{file_name}.css")
     FileUtils.copy("lib/resources/font-awesome.css", "#{dir}/font-awesome.css")
 
 
     # Generate PDF
     kit = PDFKit.new(File.new(body_path), pdf_settings)
-    kit.to_file("invoice_previews/#{invoice_name}/invoice.pdf")
+    kit.to_file("invoice_previews/#{invoice_name}/#{file_name}.pdf")
 
     # Remove temp dir - fails on windows, let the OS take care of tidying up
     # FileUtils.remove_entry_secure dir
