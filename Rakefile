@@ -26,3 +26,9 @@ task :qa do
   pg.generate_qa
 end
 
+task :sql do
+  sql_update 4, 'classic'
+  sql_update 5, 'blend'
+#  sql_update 6, 'stripe'
+  sql_insert 'stripe'
+end

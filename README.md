@@ -111,3 +111,7 @@ Here's a few useful font combos *(heading + body)*
 
 ## Sharing your layouts
 You can use this kit to create layouts for your own personal use. We also welcome high quality layouts to share with the rest of the inniAccounts community. If you'd like to share your design please issue a pull request and we'll take a look at your layout.
+
+
+### Known issues
+* Header size changes on OSX depending on amount of rows
