@@ -42,7 +42,7 @@ table {
 
 
 section#header {
-  height: ($page-margin-top - 1.5cm) * 1.33;
+  height: 12cm;//($page-margin-top - 1.5cm) * 1.33;
   position: relative;
 
   // Clearfix:
@@ -232,7 +232,7 @@ section#totals {
 
   &.non-gbp-invoice {
     td.base {
-      display: inherit;
+      display: table-cell;
     }
   }
 

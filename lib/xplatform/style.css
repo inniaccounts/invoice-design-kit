@@ -1,0 +1,14 @@
+body#header-body {
+    height:20cm;
+    border-bottom: 1px solid red;
+
+}
+
+div {
+    border-bottom:1px solid black;
+}
+
+div#header {
+    background-color: red;
+    color:white;
+}

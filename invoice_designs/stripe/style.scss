@@ -4,8 +4,8 @@ $author:              'inniAccounts';
 $orientation:         'Portrait';
 $page-margin-top:     12.2cm;
 $page-margin-bottom:  3.8cm;
-$page-margin-left:    0cm;
-$page-margin-right:   0cm;
+$page-margin-left:    1cm;
+$page-margin-right:   1cm;
 
 /* User settings & defaults: */
 $font-title: Arial, sans-serif  !default;
@@ -14,16 +14,16 @@ $color-primary: #52c0e8 !default;
 $color-secondary: #231f20 !default;
 $logo: false !default;
 $bg-primary: #f3f3f4;
-$content-margin-left: 95px;
-$content-margin-right: 95px;
 $left-col-width: 55px;
+
 
 body {
   font: 14px $font-body;
   line-height: 15px;
   margin: 0;
   position: relative;
-  height: 100%;
+  //OSX height: 100%;
+  color: $color-secondary;
 }
 
 .clearfix {
@@ -42,7 +42,6 @@ body {
 .blue-bg {
   display: inline-block;
   background-color: $color-primary;
-  margin-left: $content-margin-left;
   width: $left-col-width;
   height: 100%;
 }
@@ -58,6 +57,8 @@ body {
 
 table {
   border-collapse: collapse;
+//  border-spacing: 2px;
+//  border-collapse: separate;
 
   td {
     padding: 15px 10px 15px 25px;
@@ -86,8 +87,13 @@ table {
 
 
 section#header {
+  //height:12.2cm;
+  height:100%;
+  // Setting height of 100% works well, on windows at least
+  // content is aligned to top of header, plus there's (oddly) a margin too
   position: relative;
   width: auto;
+  //display: none;
 
   // Clearfix:
   &:after {
@@ -103,7 +109,7 @@ section#header {
   }
 
   #identity {
-    min-height: 200px;
+    //OSX min-height: 200px;
     width: 100%;
     margin-bottom: 40px;
     margin-top: 50px;
@@ -111,10 +117,14 @@ section#header {
     @if $logo {
       .logo {
         content: $logo;
-        max-width: 465px;
-        max-height: 133px;
-        margin-bottom: 1em;
+        max-width: 5cm;
+        height: 1.5cm;
         background-color: #e2e3e4;
+        float: left;
+      }
+
+      .company-name {
+        display: none;
       }
     }
 
@@ -131,6 +141,9 @@ section#header {
     .reference-block {
       font-size: 35px;
       padding-top: 15px;
+      color: $color-secondary;
+      float: right;
+      height: 1.2cm;
 
       .reference {
         display: inline-block;
@@ -147,9 +160,10 @@ section#header {
   table.company-info {
     margin-top: 40px;
     width: 100%;
+    color: $color-secondary;
 
     .color-line {
-      height: 10px;
+      height: 3px;
 
       td {
         background-color: $bg-primary;
@@ -201,26 +215,40 @@ section#header {
       display: table-header-group;
 
       tr {
-        border-bottom: 3px solid $color-primary;
 
         th {
+//          border-left: 3px solid #fff;
+ //         border-right: 3px solid #fff;
+  //        border-bottom: 3px solid $color-primary;
           font-weight: normal;
           background-color: white;
+          padding:15px;
+
+          &.number {
+            text-align: center;
+          }
+          &:first-child {
+            border-left:none;
+          }
         }
+
+
       }
 
     }
 
     .color-line {
-      height: 9px;
+      font-size:0px;
 
       td {
         background-color: $color-primary;
         padding: 0;
+        height: 3px;
       }
     }
 
     tr {
+      page-break-inside: avoid;
       td {
         background-color: #f3f3f4;
         border: 3px solid #fff;
@@ -238,6 +266,11 @@ section#header {
         }
       }
 
+      &:last-child {
+        border-bottom: none;
+      }
+
+
       .description {
         padding-left: 27px;
       }
@@ -248,6 +281,8 @@ section#header {
         padding-left: 10px;
         width: 80px;
       }
+
+
     }
   }
   #lines {
@@ -257,7 +292,7 @@ section#header {
   #totals {
     tr:first-child {
       td {
-        border-top: none;
+        //border-top: 3px solid $color-primary;
       }
     }
 
@@ -273,7 +308,7 @@ section#header {
       }
 
       td {
-        color: #404041;
+        color: $color-secondary;
         font-size: 13px;
         padding-top: 2px;
         padding-bottom: 2px;
@@ -306,6 +341,9 @@ section#header {
       &.gbp {
         background-color: white;
       }
+      &.no-fill {
+        background-color: transparent;
+      }
     }
   }
 }
@@ -316,8 +354,6 @@ section#header {
 }
 
 .wrapper, #lines, #totals, #message {
-  margin-left: $content-margin-left;
-  margin-right: $content-margin-right;
 }
 
 #message {
