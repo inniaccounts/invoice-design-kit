@@ -1,0 +1,1 @@
+This template has all the markup you need, with minimal styling to render an invoice.

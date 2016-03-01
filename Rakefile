@@ -20,10 +20,13 @@ task :generate_previews do
   pg.generate
 end
 
-desc 'Generates invoice QA previews'
+desc 'Generates invoice QA previews. Pass invoice name as last arg to preview single invoice'
 task :qa do
+  # Swallow arguments - see http://cobwwweb.com/4-ways-to-pass-arguments-to-a-rake-task
+  ARGV.each { |a| task a.to_sym do ; end }
+
   pg = PreviewGenerator.new
-  pg.generate_qa
+  pg.generate_qa ARGV[1]
 end
 
 task :sql do

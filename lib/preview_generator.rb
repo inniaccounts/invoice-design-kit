@@ -71,11 +71,20 @@ class PreviewGenerator
     end
   end
 
-  def generate_qa
+  def generate_qa(design = nil)
     Dir.mkdir('invoice_previews') unless Dir.exist?('invoice_previews')
 
     puts '------------------------'
-    Dir.entries('invoice_designs').select {|entry| !entry.include?('.') }.each do |d|
+
+    if design
+      designs = [design]
+    else
+      designs = Dir.entries('invoice_designs').select {|entry| !entry.include?('.') }
+    end
+
+
+    designs.each do |d|
+      Dir.mkdir("invoice_previews/#{d}") unless Dir.exist?("invoice_previews/#{d}")
       FileUtils.copy("lib/resources/font-awesome.css", "invoice_previews/#{d}/font-awesome.css")
 
       # Short / regular

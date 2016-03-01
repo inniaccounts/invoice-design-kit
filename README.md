@@ -16,7 +16,7 @@ This kit contains Ruby scripts to help you develop your invoice: the scripts wil
 * Run `guard` - this will watch source files in `invoice_designs` for changes and automagically output previews to `invoice_previews`
 
 ## Creating a layout
-To create an invoice layout, simply create a new subdirectory in `invoice_designs` and give it a reasonable name. To get started, it's probably easier to base your layout on an existing one - copy `body.html`, `footer.html`, `header.html` and `style.scss` from another layout into your new directory. Guard should pick up the change and build a preview for you in `invoice_previews`. You can now hack away.
+To create an invoice layout, simply create a new subdirectory in `invoice_designs` and give it a reasonable name. **To get started, copy the starter theme 'blank'** - copy `body.html`, `footer.html`, `header.html` and `style.scss` from ./blank into your new directory. Guard should pick up the change and build a preview for you in `invoice_previews`. You can now hack away.
 
 ## Anatomy of a layout
 
@@ -37,7 +37,7 @@ You'll (obviously) use style.scss to apply formatting to your HTML. We use SCSS 
 
 * The name and author will be shown in the layout picker in the inniAccounts app.
 * Orientation: `Portrait` or `Landscape`
-* Margins: *must* be specified in cm. The top and bottom margin determine the height of your header and footer.
+* Margins: *must* be specified in cm. The top and bottom margin determine the height of your header and footer. See the notes in the SCSS file in the blank theme for details on how to set these correctly.
 
 There are four optional variables to allow the user to customise the fonts and colours used in your layout. The value of these can be set by the user when they choose their invoice layout in the app. If you use these variables in your stylesheet the user will be prompted to set them - if you don't, they won't appear in the user interface. It's a good idea to set some default values. The code block looks like this:
 
@@ -54,30 +54,16 @@ The final run-time variable is `$logo`. We'll base64 encode the user's logo imag
     @if $logo {
       #logo {
         content:$logo;
-        max-width:350px;
-        max-height:100px;
+          // We need to multiple the target size (6x3cm) by 1.25
+          max-width:6cm * 1.25;
+          max-height:3cm * 1.25;
       }
     }
 
 ## Helpful hints
 
 #### Header and footer sizing
-If you'd like a 7cm header, a 4cm footer and a 1cm page margin then try the following in your stylesheet:
-
-    $page-margin-top:     8cm; // 7 + 1
-    $page-margin-bottom:  5cm; // 4 + 1
-    $page-margin-left:    1cm;
-    $page-margin-right:   1cm;
-
-    section#header {
-        margin-top:1cm;
-        height:7cm;
-    }
-
-    section#footer {
-        height:4cm;
-        margin-bottom:1cm;
-    }
+To correctly size your header and footer, look at the SCSS in the blanks theme. TL;DR: set `$page-margin-top` & `$page-margin-bottom` to the height of your header / footer, including any page top / bottom margins. Then set `$true-margin-top` & `$true-margin-bottom` to the page margins you desire.
 
 #### Developing with a logo placeholder
 Add this to the top of your stylesheet: `$logo: url('http://placehold.it/350x100')`
@@ -109,9 +95,9 @@ Here's a few useful font combos *(heading + body)*
 * Fjalla One + Cantarell
 * Quicksand + EB Garamond
 
+## Testing your layout
+To test your layout, issue the command `rake qa [name of your theme's directory]`. This will generate 5 different invoice PDFs: short; long; no reference number; overseas and one with a customised style. Take a look at all of the PDFs to ensure they've rendered as you expect.
+
 ## Sharing your layouts
 You can use this kit to create layouts for your own personal use. We also welcome high quality layouts to share with the rest of the inniAccounts community. If you'd like to share your design please issue a pull request and we'll take a look at your layout.
 
-
-### Known issues
-* Need to set a header height to get content to align to top of invoice

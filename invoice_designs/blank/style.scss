@@ -1,0 +1,136 @@
+/* Theme settings: */
+$name:                'Blank';
+$author:              'inniAccounts';
+$orientation:         'Portrait';
+$page-margin-top:     10cm;   // Includes header - see below
+$page-margin-bottom:  2cm;    // Includes footer - see below
+$page-margin-left:    1cm;
+$page-margin-right:   1cm;
+
+/* User settings & defaults: */
+$font-title: Arial, sans-serif  !default;
+$font-body: Arial, sans-serif  !default;
+$color-primary: #000066 !default;
+$color-secondary: #333 !default;
+$logo: false !default;
+
+
+//////////////// CSS RESET ////////////////
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, em, img, small, strong, b, u, i,
+center,dl, dt, dd, ol, ul, li, label, table, caption, tbody, tfoot, thead, tr, th, td,
+footer, header, section, summary {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+///////////////////////////////////////////
+
+body {
+  font:$font-body;
+  color:$color-secondary;
+}
+
+
+section#header {
+  // BACKGROUND
+  // The header height is somewhat voodoo-like
+  // Using wkhtmltopdf 0.12.3-dev-79ff51e (with patched qt) on Windows,
+  // via trial and error, there appears to be a magic constant of 1.25 somewhere.
+  // Therefore, to get the header to match the $page-margin-top, you need to
+  // multiply it by 1.25, then, of course, subtract the margin you want.
+  // BUT YOU DON'T NEED TO KNOW THAT
+
+  //  Set $page-margin-top (above) to the total height of the header,
+  //  *including* any margin you want above it.
+  //
+  //  Then set this to the margin you want above the header:
+  $true-margin-top:1cm;
+
+  height:($page-margin-top * 1.25) - ($true-margin-top * 1.25);
+  //background-color:blue;
+
+  @if $logo {
+    #logo {
+      float:right;
+      content:$logo;
+      // We need to multiple the target size (6x3cm) by 1.25
+      max-width:6cm * 1.25;
+      max-height:3cm * 1.25;
+    }
+  }
+
+  /*
+    You'll probably want to use this to format some of your header elements:
+        font:$font-title;
+        color:$color-primary;
+  */
+}
+
+
+section#body {
+
+  section#lines {
+    table{
+      width:100%;
+
+      .description {
+        text-align: left;
+      }
+      .qty, .vatrate, .unit, .price {
+        text-align: right;
+      }
+
+      th {
+        font:$font-title;
+        color:$color-primary;
+      }
+
+      // To ensure header is repeated and we don't split a line in half
+      thead   { display: table-header-group; }
+      tr      { page-break-inside: avoid; }
+
+
+    }
+  }
+
+  section#totals {
+    page-break-inside: avoid;
+
+    // Only show non-GBP table cells when
+    // overseas invoicing enabled
+    td.base { display: none; }
+    &.non-gbp-invoice {
+      td.base {
+        display: table-cell;
+      }
+    }
+
+  }
+
+}
+
+
+
+section#footer {
+  //  Set $page-$page-margin-bottom-top (above) to the total height of the footer,
+  //  *including* any margin you want below it.
+  //
+  //  Then set this to the margin you want below the footer:
+  $true-margin-bottom:1cm;
+
+  height:($page-margin-bottom * 1.25) - ($true-margin-bottom * 1.25);
+  //background-color:red;
+}
+
+
+
