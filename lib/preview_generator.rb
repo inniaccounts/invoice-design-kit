@@ -106,6 +106,8 @@ class PreviewGenerator
       invoice_data = @invoice_data.clone
       extra_css = '$color-primary:red;'
       extra_css += '$color-secondary:green;'
+      extra_css += "$font-title:'Lobster';"
+      extra_css += "$font-body:'Dancing Script';"
       extra_css += "$logo:url(data:#{@logo});"
       generate_preview d, 'qa-styled', invoice_data, extra_css
 

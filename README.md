@@ -114,4 +114,4 @@ You can use this kit to create layouts for your own personal use. We also welcom
 
 
 ### Known issues
-* Header size changes on OSX depending on amount of rows
+* Need to set a header height to get content to align to top of invoice

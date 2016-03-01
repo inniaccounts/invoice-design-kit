@@ -26,9 +26,6 @@ body {
   line-height: 1.1em;
   margin: 0;
   padding: 1px; // Intentional: to allow table borders to render correctly
-  vertical-align: top;
-  height:100%;
-  width:920px;
 }
 
 h2 {
@@ -51,9 +48,15 @@ table {
 
 
 section#header {
-  //margin-top:1.5cm * 1.33;
-  //height:8.5cm * 1.33;
   height:10.5cm;
+  @if $logo {
+    // Expand header / reduce margin to fit in logo
+    height:11.5cm;
+  } @else {
+    height:10.5cm;
+  }
+  position: relative;
+  width: auto;
 
   // Clearfix:
   &:after {

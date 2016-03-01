@@ -11,6 +11,7 @@ $page-margin-right:   1cm;
 $font-title: Arial, sans-serif  !default;
 $font-body: Arial, sans-serif  !default;
 $color-primary: #000066 !default;
+$color-secondary: #000000 !default;
 $logo: false !default;  // url('http://placehold.it/350x100')
 
 body {
@@ -18,6 +19,7 @@ body {
   margin: 0;
   padding: 1px; // Intentional: to allow table borders to render correctly
   width:920px;
+  color:$color-secondary;
 }
 
 h2 {
@@ -42,7 +44,13 @@ table {
 
 
 section#header {
-  height: 12cm;//($page-margin-top - 1.5cm) * 1.33;
+  @if $logo {
+    // Expand header / reduce margin to fit in logo
+    height:14cm;
+  } @else {
+    // To match legacy
+    height:13cm;
+  }
   position: relative;
 
   // Clearfix:
