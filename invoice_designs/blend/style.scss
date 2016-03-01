@@ -14,7 +14,7 @@ $color-primary: #882251 !default;
 $color-secondary: #333 !default;
 $logo: false !default;
 
-$border-color: change-color($color-secondary, $lightness: 70);
+$color-secondary-light: change-color($color-secondary, $saturation:10, $lightness: 60);
 
 $base-font-size:17px;
 
@@ -97,13 +97,13 @@ section#header {
 
     th, td {
       text-align: left;
-      color: change-color($color-secondary, $lightness: 60);
+      color: $color-secondary-light;
       font-size:13px;
       padding:0 0 0.6em 0;
     }
     th {width:1.5em;}
 
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $color-secondary-light;
 
   }
 
@@ -208,7 +208,7 @@ section#lines {
 
     tbody {
       tr:nth-child(2n+1) td {
-        background-color: change-color($color-secondary, $lightness: 95);
+        background-color: change-color($color-secondary, $saturation: 10, $lightness: 95);
       }
     }
 
@@ -316,6 +316,6 @@ section#footer {
     margin:0 auto;
     max-width: 60%;
     text-align: center;
-    color:change-color($color-secondary, $lightness: 50);
+    color:$color-secondary-light;
   }
 }
